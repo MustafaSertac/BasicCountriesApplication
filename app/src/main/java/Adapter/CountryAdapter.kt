@@ -5,19 +5,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+
+
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.basiccountriesapplication.R
 import com.example.basiccountriesapplication.databinding.ItemCountryBinding
+import util.Util
 import view.FeedFragmentDirections
+
+
 
 
 
 class CountryAdapter(val countryList: ArrayList<Country>): RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
 
-
+private lateinit var util:Util
 
     class CountryViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 
@@ -42,6 +48,8 @@ class CountryAdapter(val countryList: ArrayList<Country>): RecyclerView.Adapter<
             val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
+        util.downloadFromUrl(   holder.view.findViewById<ImageView>(R.id.imageView),holder.view.context,countryList[position].imageUrl,util.placeholderProgressbar(holder.view.context))
 
     }
 

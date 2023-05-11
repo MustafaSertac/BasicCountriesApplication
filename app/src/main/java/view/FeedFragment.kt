@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,14 +52,19 @@ private lateinit var binding:FragmentFeedBinding
 
         viewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
         viewModel.refreshData()
-        binding= FragmentFeedBinding.inflate(layoutInflater)
-        binding.countryList.layoutManager=LinearLayoutManager(context)
-        binding.countryList.adapter=countryAdapter
+        binding = FragmentFeedBinding.inflate(layoutInflater)
+        binding.countryList.layoutManager = LinearLayoutManager(context)
+        binding.countryList.adapter = countryAdapter
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.countryList.visibility = View.GONE
+            binding.countryError.visibility = View.GONE
+            binding.countryLoading.visibility = View.GONE
+            viewModel.refreshData()
+            binding.swipeRefreshLayout.isRefreshing = false
 
 
-
-
-        /*
+            /*
         fragment_button.setOnClickListener {
             val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment()
             Navigation.findNavController(it).navigate(action)
@@ -66,9 +72,9 @@ private lateinit var binding:FragmentFeedBinding
 
          */
 
-        observeLiveData()
 
-    }
+        }
+        observeLiveData()}
 
     private fun observeLiveData() {
         viewModel.countries.observe(viewLifecycleOwner, Observer {countries ->
