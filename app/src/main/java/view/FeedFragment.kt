@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -60,8 +61,12 @@ private lateinit var binding:FragmentFeedBinding
             binding.countryList.visibility = View.GONE
             binding.countryError.visibility = View.GONE
             binding.countryLoading.visibility = View.GONE
-            viewModel.refreshData()
+            viewModel.refResshFromAPI()
             binding.swipeRefreshLayout.isRefreshing = false
+
+
+
+
 
 
             /*
