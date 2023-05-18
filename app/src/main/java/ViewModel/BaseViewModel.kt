@@ -1,0 +1,4 @@
+package ViewModel
+
+class BaseViewModel {
+}
